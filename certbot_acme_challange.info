@@ -1,0 +1,5 @@
+name = Certbot ACME Challange
+description = Use variables to for ACME Challange
+package = Custom
+core = 7.x
+version = 1.0

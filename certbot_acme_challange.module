@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function certbot_acme_challange_menu() {
+  $items = array();
+
+  $items['.well-known/acme-challenge/%'] = array(
+    'title' => 'Let\'s Encrypt challenge',
+    'description' => 'Outputs configured certbot challenge',
+    'page callback' => 'certbot_acme_challenge_challenge',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of certbot_acme_challenge_challenge().
+ *
+ * ACME challenge callback
+ */
+function certbot_acme_challenge_challenge($arg) {
+  drupal_page_is_cacheable(FALSE);
+
+  $token = variable_get('certbot_acme_challange_token', '');
+  $validation = variable_get('certbot_acme_challange_validation', '');
+
+  if ($arg == $token) {
+    print $validation;
+  }
+
+  drupal_exit();
+}
